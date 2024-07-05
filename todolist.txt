@@ -1,0 +1,5 @@
+Hello friends of jason ng and anthony chen, 
+
+to do list
+- figure out how typescript works 
+- how the fuck does this work
