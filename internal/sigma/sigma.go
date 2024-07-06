@@ -1,8 +1,6 @@
 package sigma
 
-import (
-	"math/rand/v2"
-)
+import "math/rand/v2"
 
 type Ranges struct {
 	A_lower, A_upper, B_lower, B_upper int
