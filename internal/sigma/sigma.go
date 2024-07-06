@@ -1,64 +1,50 @@
 package sigma
 
 import (
-	"math"
 	"math/rand/v2"
 )
 
-func Addition(digits int) (a, b, sum int) {
-	upper := int(math.Pow10(digits))
+type Ranges struct {
+	A_lower, A_upper, B_lower, B_upper int
+}
 
-	a = rand.IntN(upper)
-	b = rand.IntN(upper)
-	sum = a + b
+type Equation struct {
+	A, B, Result int
+}
+
+func randRange(lower, upper int) int {
+	// Returns a random integer in [lower, upper]
+	return lower + rand.IntN(upper-lower+1)
+}
+
+func Addition(ran Ranges) (eq Equation) {
+	eq.A = randRange(ran.A_lower, ran.A_upper)
+	eq.B = randRange(ran.B_lower, ran.B_upper)
+	eq.Result = eq.A + eq.B
 
 	return
 }
 
-func Subtraction(digits int) (a int, b int, diff int) {
-	upper := int(math.Pow10(digits))
-
-	a = rand.IntN(upper)
-	b = rand.IntN(upper)
-
-	// Ensure positive difference
-	if a < b {
-		a, b = b, a
-	}
-
-	diff = a - b
+func Subtraction(ran Ranges) (eq Equation) {
+	// Subtraction is the inverse of addition
+	eq = Addition(ran)
+	eq.A, eq.Result = eq.Result, eq.A
 
 	return
 }
 
-func Multiplication(digits int) (a int, b int, prod int) {
-	upper := int(math.Pow10(digits))
-
-	a = rand.IntN(upper)
-	b = rand.IntN(upper)
-	prod = a * b
+func Multiplication(ran Ranges) (eq Equation) {
+	eq.A = randRange(ran.A_lower, ran.A_upper)
+	eq.B = randRange(ran.B_lower, ran.B_upper)
+	eq.Result = eq.A * eq.B
 
 	return
 }
 
-func Division(digits int) (a int, b int, quot int) {
-	upper := int(math.Pow10(digits))
-
-	a = rand.IntN(upper)
-
-	// Ensure integer quotient
-	sqrt := int(math.Sqrt(float64(a)))
-	factors := make([]int, 0, 2*sqrt) // 2sqrt(a) upper bound
-
-	for i := 1; i <= sqrt; i++ {
-		if a%i == 0 {
-			factors = append(factors, i)
-		}
-	}
-
-	b = factors[rand.IntN(len(factors))]
-
-	quot = a / b
+func Division(ran Ranges) (eq Equation) {
+	// Division is the inverse of multiplication
+	eq = Multiplication(ran)
+	eq.A, eq.Result = eq.Result, eq.A
 
 	return
 }

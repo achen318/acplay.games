@@ -7,15 +7,25 @@ import (
 )
 
 func main() {
-	a, b, sum := sigma.Addition(2)
-	fmt.Printf("%d + %d = %d\n", a, b, sum)
+	// For + and -, operands are [2, 100]
+	ranges := sigma.Ranges{
+		A_lower: 2, A_upper: 100,
+		B_lower: 2, B_upper: 100,
+	}
 
-	a, b, diff := sigma.Subtraction(2)
-	fmt.Printf("%d - %d = %d\n", a, b, diff)
+	eq := sigma.Addition(ranges)
+	fmt.Printf("%d + %d = %d\n", eq.A, eq.B, eq.Result)
 
-	a, b, prod := sigma.Multiplication(2)
-	fmt.Printf("%d * %d = %d\n", a, b, prod)
+	eq = sigma.Subtraction(ranges)
+	fmt.Printf("%d - %d = %d\n", eq.A, eq.B, eq.Result)
 
-	a, b, quot := sigma.Division(2)
-	fmt.Printf("%d / %d = %d\n", a, b, quot)
+	// For * and /, operands are [2, 12]
+	ranges.A_upper = 12
+
+	eq = sigma.Multiplication(ranges)
+	fmt.Printf("%d * %d = %d\n", eq.A, eq.B, eq.Result)
+
+	eq = sigma.Division(ranges)
+	fmt.Printf("%d / %d = %d\n", eq.A, eq.B, eq.Result)
+
 }
